@@ -2,8 +2,8 @@
 
 # SvelteKit
 node_modules
-/build
-/.svelte-kit
+build
+.svelte-kit
 /package
 .env
 .env.*
