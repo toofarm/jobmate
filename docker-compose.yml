@@ -3,19 +3,23 @@ version: '3'
 services:
   django:
     build:
-      context: ./
+      context: ./server
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     depends_on:
       - frontend
+    restart: on-failure
     networks:
       - mynetwork
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "9000:9000"
+    restart: on-failure
     networks:
       - mynetwork
 
