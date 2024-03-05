@@ -14,7 +14,8 @@ class Job(models.Model):
     description = models.TextField()
     link = models.URLField(max_length=200)
     contact = models.CharField(max_length=100, blank=True, null=True)
-    applied = models.DateTimeField(auto_now_add=True)
+    applied = models.DateTimeField()
+    updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     follow_up = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
@@ -33,7 +34,7 @@ class Job(models.Model):
 
 class Interaction(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
 
