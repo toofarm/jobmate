@@ -50,7 +50,6 @@ class Company(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     logo = models.ImageField(upload_to="static/", blank=True, null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    jobs_applied = models.ManyToManyField(Job, blank=True, related_name="jobs_applied")
 
     def __str__(self):
         return self.name
