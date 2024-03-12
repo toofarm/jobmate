@@ -1,4 +1,5 @@
 from django.db import models
+from jobmate import settings
 from django.contrib.auth.models import User
 
 
@@ -19,7 +20,6 @@ class Job(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     follow_up = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     confidence = models.CharField(
         max_length=10,
         choices=Confidence.choices,
@@ -49,7 +49,6 @@ class Company(models.Model):
     contact = models.CharField(max_length=100, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     logo = models.ImageField(upload_to="static/", blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
