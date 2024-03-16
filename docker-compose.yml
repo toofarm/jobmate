@@ -30,6 +30,8 @@ services:
       - DB_USER=vinhle
       - DB_PASS=password
       - DB_PORT=5432
+    volumes:
+      - ./server:/app
     networks:
       - mynetwork
 
@@ -39,6 +41,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9000:9000"
+    volumes:
+      - ./frontend:/app
     restart: on-failure
     networks:
       - mynetwork

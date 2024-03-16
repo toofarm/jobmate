@@ -1,15 +1,18 @@
-from django.contrib import admin
-from django.urls import include, path
-
-from rest_framework.authtoken import routers
-
-from user.views import UserViewSet
-
-router = routers.DefaultRouter()
-router.register(r"users", UserViewSet)
+from django.urls import path
+from rest_framework.routers import format_suffix_patterns
+from .views import UserViewSet
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include(router.urls)),
-    path("auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path(
+        "users/",
+        UserViewSet.as_view({"get": "list", "post": "create"}),
+        name="user-list",
+    ),
+    path(
+        "users/<int:pk>/",
+        UserViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),
+        name="user-detail",
+    ),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
