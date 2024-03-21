@@ -1,7 +1,21 @@
 <script>
 	import Header from '../components/Header.svelte';
 	import './styles.css';
-</script>
+	import { userProfile } from '$stores/user';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+
+	$: console.log(`user profile: ${$userProfile}`);
+	$: if (browser && !$userProfile) {
+		console.log('No user profile, redirecting to /login');
+		goto('/login');
+	} else if (browser && $userProfile && $page.url.pathname === '/login') {
+		console.log('User found, redirecting to /');
+		goto('/');
+	}
+
+</script> 
 
 <div class="app">
 	<Header />

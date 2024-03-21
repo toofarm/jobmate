@@ -19,7 +19,6 @@
 
 <main>
 	<h1>Login</h1>
-	=
 	{#if error}
 		<p style="color: red;">{error}</p>
 	{/if}
