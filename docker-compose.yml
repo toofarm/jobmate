@@ -20,7 +20,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - db
     restart: on-failure
@@ -40,9 +40,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "9000:9000"
+      - "80:9000"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     restart: on-failure
     networks:
       - mynetwork
