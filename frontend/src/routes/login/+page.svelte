@@ -1,18 +1,18 @@
 <script lang="ts">
-	import axios, { AxiosError } from 'axios';
+	import axios, { AxiosError } from 'axios'
 
-	let username = '';
-	let password = '';
-	let error = '';
+	let username = ''
+	let password = ''
+	let error = ''
 
 	async function handleLogin(): Promise<void> {
-		console.log('Logging in...');
+		console.log('Logging in...')
 		try {
-			const response = await axios.post('/api/login', { username, password });
-			console.log('Login successful:', response.data);
+			const response = await axios.post('/api/login', { username, password })
+			console.log('Login successful:', response.data)
 		} catch (err) {
-			if (err instanceof AxiosError) error = err.response?.data.message;
-			console.error('Login failed:', error);
+			if (err instanceof AxiosError) error = err.response?.data.message
+			console.error('Login failed:', error)
 		}
 	}
 </script>
