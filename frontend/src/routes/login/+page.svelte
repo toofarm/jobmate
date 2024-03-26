@@ -1,5 +1,7 @@
 <script lang="ts">
 	import axios, { AxiosError } from 'axios'
+	import { goto } from '$app/navigation'
+	import { PUBLIC_API_URL } from '$env/static/public'
 
 	let username = ''
 	let password = ''
@@ -8,8 +10,9 @@
 	async function handleLogin(): Promise<void> {
 		console.log('Logging in...')
 		try {
-			const response = await axios.post('/api/login', { username, password })
+			const response = await axios.post(`${PUBLIC_API_URL}/login`, { username, password })
 			console.log('Login successful:', response.data)
+			goto('/')
 		} catch (err) {
 			if (err instanceof AxiosError) error = err.response?.data.message
 			console.error('Login failed:', error)

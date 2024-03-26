@@ -1,7 +1,15 @@
-<script>
-	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+<script lang="ts">
+	import { page } from '$app/stores'
+	import logo from '$lib/images/svelte-logo.svg'
+	import github from '$lib/images/github.svg'
+	
+	import LogoutBtn from './LogoutBtn.svelte'
+	import { userProfile } from '$stores/user'
+	import type { TUser } from '$types/types'
+
+	let user: TUser | null = null
+
+	userProfile.subscribe(value => user = value)	
 </script>
 
 <header>
@@ -36,6 +44,10 @@
 			<img src={github} alt="GitHub" />
 		</a>
 	</div>
+
+	{#if user}
+	<LogoutBtn />
+	{/if}
 </header>
 
 <style>
