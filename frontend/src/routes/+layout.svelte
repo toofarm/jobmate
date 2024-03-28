@@ -5,12 +5,13 @@
 	import { goto } from '$app/navigation'
 	import { browser } from '$app/environment'
 	import { page } from '$app/stores'
+	import { noAuthRoutes } from '$lib/images/client/constants'
 
 	$: console.log(`user profile: ${$userProfile}`)
-	$: if (browser && !$userProfile) {
+	$: if (browser && !$userProfile && !noAuthRoutes.includes($page.url.pathname)) {
 		console.log('No user profile, redirecting to /login')
 		goto('/login')
-	} else if (browser && $userProfile && $page.url.pathname === '/login') {
+	} else if (browser && $userProfile && noAuthRoutes.includes($page.url.pathname)) {
 		console.log('User found, redirecting to /')
 		goto('/')
 	}

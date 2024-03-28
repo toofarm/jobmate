@@ -10,12 +10,12 @@
 	async function handleLogin(): Promise<void> {
 		console.log('Logging in...')
 		try {
-			const response = await axios.post(`${PUBLIC_API_URL}/login`, { username, password })
+			const response = await axios.post(`${PUBLIC_API_URL}/auth/`, { username, password })
 			console.log('Login successful:', response.data)
 			goto('/')
 		} catch (err) {
-			if (err instanceof AxiosError) error = err.response?.data.message
-			console.error('Login failed:', error)
+			console.error('Login failed:', err)
+			if (err instanceof AxiosError) error = err.message
 		}
 	}
 </script>
@@ -23,7 +23,7 @@
 <main>
 	<h1>Login</h1>
 	{#if error}
-		<p style="color: red;">{error}</p>
+		<p class="error">{error}</p>
 	{/if}
 	<form on:submit|preventDefault={handleLogin}>
 		<label for="username">Username:</label>
@@ -37,5 +37,8 @@
 </main>
 
 <style>
-	/* Add your custom styles here */
+.error {
+	color: red;
+	font-style: italic;
+}
 </style>
