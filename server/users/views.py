@@ -14,10 +14,3 @@ class UserViewSet(ModelViewSet):
     permission_classes = [
         UserPermission,
     ]
-
-# class UserCreateView(CreateAPIView):
-#     serializer_class = UserSerializer
-#     queryset = User.objects.all()
-#     permission_classes = [
-#         UserPermission,
-#     ]

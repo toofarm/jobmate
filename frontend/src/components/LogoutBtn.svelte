@@ -4,8 +4,13 @@
 
     async function handleLogout(): Promise<void> {
         console.log('Logging out...')
-        await fetch(`${PUBLIC_API_URL}/logout`, { method: 'POST' })
-        goto('/login')
+        try {
+            await fetch(`${PUBLIC_API_URL}/auth/logout/`, { method: 'POST' })
+            console.log('Logout successful')
+            goto('/login')
+        } catch (err) {
+            console.error('Logout failed:', err)
+        }
     }
 </script>
 
