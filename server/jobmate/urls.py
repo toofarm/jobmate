@@ -25,5 +25,5 @@ urlpatterns = [
     path("", include("jobs.urls")),
     path("", include("users.urls")),
     path("auth/", views.obtain_auth_token),
-    path("auth/logout/", views.logout)
+    path("auth/logout/", views.obtain_auth_token),
 ]
