@@ -1,9 +1,39 @@
 <script>
-	import Header from '../components/Header.svelte';
-	import './styles.css';
-</script>
+	import Header from '../components/Header.svelte'
+	import './styles.css'
+	import { userProfile } from '$stores/user'
+	import { goto } from '$app/navigation'
+	import { browser } from '$app/environment'
+	import { page } from '$app/stores'
+	import { errorStore } from '$stores/error'
+	import ToastWrapper from '$components/ToastWrapper.svelte'
+	import Error from '$components/Error.svelte'
+	import { noAuthRoutes } from '$lib/images/client/constants'
+
+	$: console.log(`user profile: ${$userProfile}`)
+	$: if (browser && !$userProfile && !noAuthRoutes.includes($page.url.pathname)) {
+		console.log('No user profile, redirecting to /login')
+		goto('/login')
+	} else if (browser && $userProfile && noAuthRoutes.includes($page.url.pathname)) {
+		console.log('User found, redirecting to /')
+		goto('/')
+	}
+
+</script> 
 
 <div class="app">
+	{#if $errorStore.length > 0}
+		<ToastWrapper>
+			{#each $errorStore as error, i}
+				<Error 
+				error={{
+					'message': error,
+					'index': i,
+				}} />
+			{/each}
+		</ToastWrapper>
+	{/if}
+
 	<Header />
 
 	<main>

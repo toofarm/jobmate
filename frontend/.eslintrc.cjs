@@ -19,6 +19,13 @@ module.exports = {
 		es2017: true,
 		node: true
 	},
+	rules: {
+		'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+		'no-await-in-loop': 0,
+		'max-len': ['error', { code: 120 }],
+		quotes: ['warn', 'single'],
+		semi: ['warn', 'never']
+	},
 	overrides: [
 		{
 			files: ['*.svelte'],

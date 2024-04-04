@@ -13,6 +13,11 @@ urlpatterns = [
         UserViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),
         name="user-detail",
     ),
+    path(
+        "users/create/",
+        UserViewSet.as_view({"post": "create"}),
+        name="user-create",
+    )
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
