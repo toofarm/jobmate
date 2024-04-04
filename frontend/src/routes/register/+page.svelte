@@ -2,33 +2,39 @@
 	import axios, { AxiosError } from 'axios'
 	import { goto } from '$app/navigation'
 	import { PUBLIC_API_URL } from '$env/static/public'
+	import { userProfile } from '$stores/user' 
+	import { addError } from '$stores/error'
 
 	let email = ''
 	let password = ''
-	let firstName = ''
-	let lastName = ''
+	let first_name = ''
+	let last_name = ''
 	let error = ''
 	let loading = false
 	
-	$: valid = !!email && !!password && !!firstName && !!lastName
+	$: valid = !!email && !!password && !!first_name && !!last_name
 
 	async function signUp() {
 		try {
 			loading = true
 
 			const response = await axios.post(
-				`${PUBLIC_API_URL}/auth/signup/`, 
+				`${PUBLIC_API_URL}/users/create/`, 
 				{ 
 					email, 
 					password, 
-					firstName, 
-					lastName 
+					first_name, 
+					last_name 
 				})
 			console.log('Sign up successful:', response.data)
+			await userProfile.set(response.data)
+
 			goto('/')
 		} catch (err) {
 			if (err instanceof AxiosError) error = err.response?.data.message
 			else error = 'Something went wrong. Please try again'
+
+			addError(error)
 
 			loading = false
 		}
@@ -42,19 +48,16 @@
 
 <main>
 	<h1>Register</h1>
-	{#if error}
-		<p style="color: red;">{error}</p>
-	{/if}
 	<form 
 		class={`${loading ? 'loading' : ''}`}
 		on:submit|preventDefault={signUp}>
 		<label>
 			First Name:
-			<input type="text" bind:value={firstName} required />
+			<input type="text" bind:value={first_name} required />
 		</label>
 		<label>
 			Last Name:
-			<input type="text" bind:value={lastName} required />
+			<input type="text" bind:value={last_name} required />
 		</label>
 		<label>
 			Email:

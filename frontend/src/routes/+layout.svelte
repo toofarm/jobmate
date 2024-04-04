@@ -5,6 +5,9 @@
 	import { goto } from '$app/navigation'
 	import { browser } from '$app/environment'
 	import { page } from '$app/stores'
+	import { errorStore } from '$stores/error'
+	import ToastWrapper from '$components/ToastWrapper.svelte'
+	import Error from '$components/Error.svelte'
 	import { noAuthRoutes } from '$lib/images/client/constants'
 
 	$: console.log(`user profile: ${$userProfile}`)
@@ -19,6 +22,18 @@
 </script> 
 
 <div class="app">
+	{#if $errorStore.length > 0}
+		<ToastWrapper>
+			{#each $errorStore as error, i}
+				<Error 
+				error={{
+					'message': error,
+					'index': i,
+				}} />
+			{/each}
+		</ToastWrapper>
+	{/if}
+
 	<Header />
 
 	<main>

@@ -1,12 +1,14 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import { PUBLIC_API_URL } from '$env/static/public'
+    import { userProfile } from '$stores/user'
 
     async function handleLogout(): Promise<void> {
         console.log('Logging out...')
         try {
             await fetch(`${PUBLIC_API_URL}/auth/logout/`, { method: 'POST' })
             console.log('Logout successful')
+            await userProfile.set(null)
             goto('/login')
         } catch (err) {
             console.error('Logout failed:', err)
