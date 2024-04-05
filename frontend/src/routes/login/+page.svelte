@@ -24,7 +24,7 @@
 	}
 </script>
 
-<main>
+<div>
 	<h1>Login</h1>
 	<form on:submit|preventDefault={handleLogin}>
 		<label for="username">Username:</label>
@@ -35,11 +35,10 @@
 
 		<button type="submit">Login</button>
 	</form>
-</main>
+	<p>
+		Don't have an account? <a href="/register">Register</a>
+	</p>
+</div>
 
 <style>
-.error {
-	color: red;
-	font-style: italic;
-}
 </style>

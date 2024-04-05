@@ -41,7 +41,7 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p>A modest job-search app from <a href="https://shanemadethat.com" target="_blank">Shane</a></p>
 	</footer>
 </div>
 

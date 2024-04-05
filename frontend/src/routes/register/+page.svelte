@@ -46,7 +46,7 @@
 	<meta name="description" content="Register for Jobmate" />
 </svelte:head>
 
-<main>
+<div>
 	<h1>Register</h1>
 	<form 
 		class={`${loading ? 'loading' : ''}`}
@@ -69,7 +69,7 @@
 		</label>
 		<button type="submit" disabled={!valid}>Sign Up</button>
 	</form>
-</main>
+</div>
 
 <style>
 	main {

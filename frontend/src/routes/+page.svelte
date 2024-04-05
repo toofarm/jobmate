@@ -1,5 +1,6 @@
-<script>
-	
+<script lang="ts">
+	import type { PageData } from './$types'
+	export let data: PageData
 </script>
 
 <svelte:head>
@@ -11,6 +12,15 @@
 	<h1>
 		Welcome
 	</h1>
+	{#if data}
+	<ul>
+		{#each data.jobs as item}
+			<li>{item.title}</li>
+		{/each}
+	</ul>
+	{:else}
+	<p>No jobs yet! Better go <a href="/jobs/add">add some</a></p>
+	{/if}
 </section>
 
 <style>
