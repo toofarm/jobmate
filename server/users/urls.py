@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.routers import format_suffix_patterns
-from .views import UserViewSet
+from .views import UserViewSet, IsAuthenticated
 
 urlpatterns = [
     path(
@@ -17,7 +17,12 @@ urlpatterns = [
         "users/create/",
         UserViewSet.as_view({"post": "create"}),
         name="user-create",
-    )
+    ),
+    path(
+        "users/is_authenticated/",
+        IsAuthenticated.as_view(),
+        name="is_authenticated",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
