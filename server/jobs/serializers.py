@@ -12,4 +12,4 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        exclude = ["created_by"]  # Exclude 'created_by' field from serialization
+        fields = "__all__"

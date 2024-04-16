@@ -35,14 +35,14 @@ services:
     networks:
       - mynetwork
 
-  frontend:
+  client:
     build:
-      context: ./frontend
+      context: ./client
       dockerfile: Dockerfile
     ports:
       - "80:9000"
     volumes:
-      - ./frontend:/app
+      - ./client:/app
       - /app/node_modules
     restart: on-failure
     networks:
