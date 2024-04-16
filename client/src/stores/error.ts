@@ -6,7 +6,7 @@ export function addError(message: string) {
     errorStore.update(errors => [...errors, message])
 }
 
-export function clearErrors() {
+export function cleaErrorr() {
     errorStore.set([])
 }
 

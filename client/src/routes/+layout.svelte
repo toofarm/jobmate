@@ -1,23 +1,39 @@
 <script>
-	import Header from '../components/Header.svelte'
 	import './styles.css'
-	import { userProfile } from '$stores/user'
 	import { goto } from '$app/navigation'
-	import { browser } from '$app/environment'
 	import { page } from '$app/stores'
-	import { errorStore } from '$stores/error'
+	import { errorStore, addError } from '$stores/error'
+	import { noAuthRoutes } from '$lib/images/client/constants'
+	import { onMount } from 'svelte'
+	import { PUBLIC_API_URL } from '$env/static/public'
+	import axios from 'axios'
+
+	// Components
 	import ToastWrapper from '$components/ToastWrapper.svelte'
 	import Error from '$components/Error.svelte'
-	import { noAuthRoutes } from '$lib/images/client/constants'
+	import Header from '$components/Header.svelte'
 
-	$: console.log(`user profile: ${$userProfile}`)
-	$: if (browser && !$userProfile && !noAuthRoutes.includes($page.url.pathname)) {
-		console.log('No user profile, redirecting to /login')
-		goto('/login')
-	} else if (browser && $userProfile && noAuthRoutes.includes($page.url.pathname)) {
-		console.log('User found, redirecting to /')
-		goto('/')
-	}
+
+	onMount(async () => {
+		const token = localStorage.getItem('access_token')
+		if (token) {
+			const response = await axios.get(`${PUBLIC_API_URL}/users/is_authenticated/`, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			})
+			if (response.data.authenticated) {
+				console.log('User is authenticated')
+			} else {
+				console.log('User is not authenticated, redirecting to /login')
+				addError('You are not authenticated. Please log in.')
+				goto('/login')
+			}
+		} else if (!noAuthRoutes.includes($page.url.pathname)) {
+			console.log('No access token, redirecting to /login')
+			goto('/login')
+		}
+	})
 
 </script> 
 
