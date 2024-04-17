@@ -16,7 +16,7 @@
 				password })
 			console.log('Login successful:', response.data)
 			await userProfile.set(response.data)
-			localStorage.setItem('access_token', response.data.access_token)
+			localStorage.setItem('access_token', response.data.token)
 			goto('/')
 		} catch (err) {
 			console.error('Login failed:', err)

@@ -2,11 +2,14 @@
     import axios, { AxiosError } from 'axios'
     import { PUBLIC_API_URL } from '$env/static/public'
     import { addError } from '$stores/error'
+    import { DateInput } from 'date-picker-svelte'
+    import Button from '$components/Button.svelte'
 
     let title = ''
     let company = ''
     let description = ''
     let successful = false
+    let applied = new Date()
 
     async function handleAddJob(): Promise<void> {
         console.log('Adding job...')
@@ -41,6 +44,11 @@
         <label for="description">Description:</label>
         <textarea id="description" bind:value={description}></textarea>
 
-        <button type="submit">Add Job</button>
+        <label for="date">Applied Date:</label>
+        <DateInput id="date" bind:value={applied} />
+
+        <Button 
+            type="submit"
+            disabled={!title || !company || !description}>Add Job</Button>
     </form>
 </section>

@@ -21,6 +21,10 @@
 	{:else}
 	<p>No jobs yet! Better go <a href="/jobs/add">add some</a></p>
 	{/if}
+	<ul>
+		<li><a href="/jobs/add">Add Job</a></li>
+		<li><a href="/jobs">View Jobs</a></li>
+	</ul>
 </section>
 
 <style>

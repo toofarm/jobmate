@@ -7,6 +7,7 @@
         try {
             await fetch(`${PUBLIC_API_URL}/auth/logout/`, { method: 'POST' })
             await userProfile.set(null)
+            localStorage.removeItem('access_token')
             goto('/login')
         } catch (err) {
             console.error('Logout failed:', err)

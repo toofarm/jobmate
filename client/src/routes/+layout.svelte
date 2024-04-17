@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 	import { errorStore, addError } from '$stores/error'
+	import { loadingStore } from '$stores/loading'
 	import { noAuthRoutes } from '$lib/images/client/constants'
 	import { onMount } from 'svelte'
 	import { PUBLIC_API_URL } from '$env/static/public'
@@ -15,23 +16,34 @@
 
 
 	onMount(async () => {
+		loadingStore.set(true)
+
 		const token = localStorage.getItem('access_token')
+
 		if (token) {
 			const response = await axios.get(`${PUBLIC_API_URL}/users/is_authenticated/`, {
 				headers: {
 					Authorization: `Bearer ${token}`
 				}
 			})
-			if (response.data.authenticated) {
+
+			console.log('Response:', response.data)
+			if (response.data.authenticated && !noAuthRoutes.includes($page.url.pathname)) {
 				console.log('User is authenticated')
+				loadingStore.set(false)
+			} else if (!response.data.authenticated && noAuthRoutes.includes($page.url.pathname)) {
+				console.log('User is not authenticated, they can access this route.')
+				loadingStore.set(false)
 			} else {
 				console.log('User is not authenticated, redirecting to /login')
 				addError('You are not authenticated. Please log in.')
 				goto('/login')
+				loadingStore.set(false)
 			}
 		} else if (!noAuthRoutes.includes($page.url.pathname)) {
 			console.log('No access token, redirecting to /login')
 			goto('/login')
+			loadingStore.set(false)
 		}
 	})
 
@@ -53,7 +65,11 @@
 	<Header />
 
 	<main>
-		<slot />
+		{#if $loadingStore}
+			<p>Loading...</p>
+		{:else}
+			<slot />
+		{/if}
 	</main>
 
 	<footer>

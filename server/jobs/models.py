@@ -13,7 +13,7 @@ class Job(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
     company = models.ForeignKey("Company", on_delete=models.CASCADE)
     description = models.TextField()
-    link = models.URLField(max_length=200)
+    link = models.URLField(max_length=200, blank=True, null=True)
     contact = models.CharField(max_length=100, blank=True, null=True)
     applied = models.DateTimeField()
     updated = models.DateTimeField(auto_now=True)
